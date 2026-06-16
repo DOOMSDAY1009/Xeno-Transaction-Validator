@@ -1,5 +1,12 @@
 "use strict";
 
+// Theme toggle (light/dark), remembered in the browser.
+document.getElementById("theme-toggle").addEventListener("click", () => {
+  const next = document.documentElement.getAttribute("data-theme") === "dark" ? "light" : "dark";
+  document.documentElement.setAttribute("data-theme", next);
+  localStorage.setItem("theme", next);
+});
+
 // Sample transaction data (also lets "Use sample data" work offline).
 const SAMPLE_CSV = `order_id,order_date,customer_name,country,phone,product_id,product_name,quantity,unit_price,amount,payment_mode,email
 ORD1001,2025-04-01,Aarav Mehta,India,9876543210,PRD55,Wireless Mouse,2,499,998,UPI,aarav.mehta@gmail.com
