@@ -1,0 +1,147 @@
+:root {
+  --blue: #2563eb;
+  --blue-dark: #1e40af;
+  --ink: #1f2937;
+  --muted: #6b7280;
+  --line: #e5e7eb;
+  --bg: #f7f8fa;
+  --ok: #16a34a;
+  --warn: #d97706;
+  --err: #dc2626;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  color: var(--ink);
+  background: var(--bg);
+  line-height: 1.5;
+}
+
+header {
+  background: #fff;
+  border-bottom: 1px solid var(--line);
+  padding: 22px 32px;
+}
+header h1 { margin: 0 0 4px; font-size: 24px; }
+.sub { margin: 0; color: var(--muted); max-width: 760px; font-size: 14px; }
+
+main {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 24px;
+  padding: 24px 32px;
+  align-items: start;
+}
+
+.panel {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 16px;
+  position: sticky;
+  top: 24px;
+}
+.panel h2 { margin: 0 0 12px; font-size: 16px; }
+.panel label {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  margin: 14px 0 4px;
+}
+.hint { display: block; font-weight: 400; color: var(--muted); font-size: 11px; }
+.panel textarea, .panel input {
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 7px 8px;
+  font-size: 13px;
+  font-family: inherit;
+}
+.panel textarea { resize: vertical; font-family: ui-monospace, monospace; }
+
+.content { display: flex; flex-direction: column; gap: 18px; }
+
+.card {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 18px 20px;
+}
+.card h2 { margin: 0 0 12px; font-size: 18px; }
+.card h3 { margin: 18px 0 8px; font-size: 15px; }
+.muted { color: var(--muted); font-size: 13px; }
+
+.row { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+
+button {
+  border: 1px solid var(--blue);
+  background: var(--blue);
+  color: #fff;
+  padding: 8px 16px;
+  border-radius: 7px;
+  font-size: 14px;
+  cursor: pointer;
+}
+button:hover { background: var(--blue-dark); border-color: var(--blue-dark); }
+button.ghost { background: #fff; color: var(--blue); }
+button.ghost:hover { background: #eff4ff; }
+button.primary { font-weight: 600; }
+
+input[type=file] { font-size: 14px; }
+select, textarea#sql-query {
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: 7px;
+  padding: 8px;
+  font-size: 13px;
+  margin: 8px 0;
+}
+textarea#sql-query { font-family: ui-monospace, monospace; resize: vertical; }
+
+.status { font-size: 13px; margin: 10px 0 0; }
+.status.ok { color: var(--ok); }
+.status.err { color: var(--err); }
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 10px 14px;
+  margin-bottom: 16px;
+}
+.grid .field label { display: block; font-size: 12px; font-weight: 600; margin-bottom: 3px; }
+.grid select { margin: 0; }
+
+.metrics { display: flex; gap: 28px; flex-wrap: wrap; }
+.metric .num { font-size: 30px; font-weight: 700; }
+.metric .lbl { font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: .04em; }
+.metric.ok .num { color: var(--ok); }
+.metric.warn .num { color: var(--warn); }
+.metric.err .num { color: var(--err); }
+
+.usable { margin: 16px 0 4px; font-size: 13px; color: var(--muted); }
+.usable .track { height: 8px; background: var(--line); border-radius: 5px; margin-top: 6px; overflow: hidden; }
+.usable .fill { height: 100%; background: var(--blue); }
+
+.bar-row { display: flex; align-items: center; gap: 10px; margin: 5px 0; font-size: 13px; }
+.bar-row .bar { height: 16px; background: var(--blue); border-radius: 3px; }
+.bar-row .lbl { flex: 0 0 320px; }
+.bar-row .cnt { color: var(--muted); }
+
+.table-scroll { overflow: auto; max-height: 420px; border: 1px solid var(--line); border-radius: 8px; margin-top: 8px; }
+table { border-collapse: collapse; width: 100%; font-size: 12.5px; }
+th, td { border-bottom: 1px solid var(--line); padding: 6px 9px; text-align: left; white-space: nowrap; }
+th { background: var(--blue); color: #fff; position: sticky; top: 0; font-weight: 600; }
+tr:nth-child(even) td { background: #f6f8fb; }
+td.err-cell { color: var(--err); white-space: normal; min-width: 220px; }
+
+.hidden { display: none; }
+
+footer { text-align: center; color: var(--muted); font-size: 12px; padding: 24px; }
+
+@media (max-width: 820px) {
+  main { grid-template-columns: 1fr; }
+  .panel { position: static; }
+}

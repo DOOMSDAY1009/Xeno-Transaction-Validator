@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Transaction Data Validation</title>
+  <link rel="stylesheet" href="styles.css" />
+  <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/alasql@4.5.1/dist/alasql.min.js"></script>
+</head>
+<body>
+  <header>
+    <h1>Transaction Data Validation</h1>
+    <p class="sub">
+      Upload a transaction dataset and the app checks phone numbers against per-country
+      rules, validates dates and amounts, and returns a cleaned file. Everything runs in
+      your browser, so the data never leaves your device.
+    </p>
+  </header>
+
+  <main>
+    <!-- Sidebar: configurable rules -->
+    <aside class="panel">
+      <h2>Settings</h2>
+
+      <label>Phone rules by country
+        <span class="hint">one per line: Country,dialingCode,digits</span>
+      </label>
+      <textarea id="cfg-countries" rows="6">India,91,10
+Singapore,65,8
+USA,1,10
+UAE,971,9
+UK,44,10
+Australia,61,9</textarea>
+
+      <label>Allowed payment modes <span class="hint">one per line</span></label>
+      <textarea id="cfg-payments" rows="5">UPI
+Credit Card
+Debit Card
+Net Banking
+PayPal
+Cash
+Wallet</textarea>
+
+      <label>Reference "today"</label>
+      <input type="date" id="cfg-refdate" value="2025-04-16" />
+
+      <label>Amount vs qty x price tolerance</label>
+      <input type="number" id="cfg-tolerance" value="0.01" step="0.01" min="0" />
+
+      <label>Rows per output chunk</label>
+      <input type="number" id="cfg-chunk" value="500" min="50" step="50" />
+    </aside>
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="card">
+        <h2>1. Load data</h2>
+        <div class="row">
+          <input type="file" id="file" accept=".csv" />
+          <button id="btn-sample" class="ghost">Use sample data</button>
+        </div>
+        <p id="load-status" class="status"></p>
+        <div id="preview-wrap" class="hidden">
+          <details>
+            <summary>Preview the raw data</summary>
+            <div id="preview" class="table-scroll"></div>
+          </details>
+        </div>
+      </div>
+
+      <div class="card hidden" id="sql-card">
+        <h2>SQL playground</h2>
+        <p class="muted">
+          Your data is loaded as a table named <code>data</code>. Write SQL and run it
+          (SELECT / WHERE / GROUP BY / JOIN). Runs in-browser via AlaSQL.
+        </p>
+        <select id="sql-example">
+          <option value="SELECT * FROM data LIMIT 10">Example: preview rows</option>
+          <option value="SELECT country, COUNT(*) AS rows FROM data GROUP BY country ORDER BY rows DESC">Example: count by country</option>
+          <option value="SELECT * FROM data WHERE payment_mode = 'UPI'">Example: filter by payment mode</option>
+        </select>
+        <textarea id="sql-query" rows="4">SELECT * FROM data LIMIT 10</textarea>
+        <div class="row">
+          <button id="btn-sql">Run in browser</button>
+          <button id="btn-sql-cloud" class="ghost">Run on cloud MySQL</button>
+          <button id="btn-cloud-load" class="ghost">Push data to cloud DB</button>
+          <button id="btn-sql-dl" class="ghost hidden">Download results</button>
+        </div>
+        <p class="muted">
+          "Run in browser" uses AlaSQL (no setup). "Run on cloud MySQL" calls a real MySQL
+          database through a secure serverless function - full MySQL syntax, active once the
+          database is configured on the host. Push your data to the cloud DB first, then query it.
+        </p>
+        <p id="sql-status" class="status"></p>
+        <div id="sql-result" class="table-scroll"></div>
+      </div>
+
+      <div class="card hidden" id="map-card">
+        <h2>2. Map your columns</h2>
+        <p class="muted">Auto-detected from the headers. Set any to "none" to skip that check.</p>
+        <div class="grid" id="map-grid"></div>
+        <button id="btn-validate" class="primary">Validate</button>
+      </div>
+
+      <div class="card hidden" id="results-card">
+        <h2>3. Results</h2>
+        <div class="metrics" id="metrics"></div>
+        <div id="usable-bar" class="usable"></div>
+        <h3 class="hidden" id="failed-h">What failed</h3>
+        <div id="breakdown"></div>
+        <h3 class="hidden" id="issues-h">Rows with issues</h3>
+        <div id="issues" class="table-scroll"></div>
+      </div>
+
+      <div class="card hidden" id="download-card">
+        <h2>4. Download</h2>
+        <div class="row">
+          <button id="dl-clean">Cleaned data</button>
+          <button id="dl-issues" class="ghost">Issues report</button>
+          <button id="dl-chunks" class="ghost">Cleaned in chunks (zip)</button>
+        </div>
+        <p id="download-note" class="muted"></p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <span>Transaction Data Validation &middot; runs entirely in the browser</span>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
