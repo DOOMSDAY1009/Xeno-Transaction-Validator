@@ -1,22 +1,6 @@
 "use strict";
 
-// Sample transaction data (also lets "Use sample data" work offline).
-const SAMPLE_CSV = `order_id,order_date,customer_name,country,phone,product_id,product_name,quantity,unit_price,amount,payment_mode,email
-ORD1001,2025-04-01,Aarav Mehta,India,9876543210,PRD55,Wireless Mouse,2,499,998,UPI,aarav.mehta@gmail.com
-ORD1002,2025-04-02,Li Wei,Singapore,81234567,PRD56,USB-C Cable,3,150,450,Credit Card,li.wei@gmail.com
-ORD1003,02-04-2025,John Carter,USA,+1 415 555 0199,PRD57,Laptop Stand,1,1200,1200,PayPal,john.carter@outlook.com
-ORD1004,2025-04-03,Fatima Noor,UAE,+971 50 123 4567,PRD58,Keyboard,1,2500,2500,Credit Card,fatima.noor@gmail.com
-ORD1005,2025-04-03,Priya Singh,India,98765,PRD59,Webcam,1,1800,1800,Debit Card,priya.singh@gmail.com
-ORD1006,2025/04/04,Tan Ah Kow,Singapore,6512345,PRD60,HDMI Adapter,2,300,600,UPI,tan.ahkow@gmail.com
-ORD1007,2025-04-05,Rahul Verma,India,919812345678,PRD61,Monitor,1,9000,9000,Net Banking,rahul.verma.gmail.com
-ORD1008,2025-04-05,Sophia Lee,Singapore,87654321,PRD62,Mouse Pad,-1,200,200,Cash,sophia.lee@gmail.com
-ORD1009,31-13-2025,Mohammed Ali,UAE,501234567,PRD63,Headphones,1,3500,3500,Credit Card,m.ali@gmail.com
-ORD1010,2025-04-06,Neha Gupta,India,8765432109,PRD64,Charger,2,799,1598,UPI,neha.gupta@gmail.com
-ORD1011,2025-04-07,David Brown,USA,2025550143,PRD65,Speaker,1,4500,4500,PayPal,david.brown@gmail.com
-ORD1010,2025-04-06,Neha Gupta,India,8765432109,PRD64,Charger,2,799,1598,UPI,neha.gupta@gmail.com
-ORD1012,2025-04-08,Aisha Khan,India,,PRD66,Power Bank,1,1500,1500,Debit Card,aisha.khan@gmail.com
-ORD1013,2025-04-08,Marcus Tan,Singapore,98765432,PRD67,Tripod,1,2200,abc,Credit Card,marcus.tan@gmail.com
-ORD1014,2025-04-09,Sanjay Rao,India,9123456780,PRD68,SD Card,4,600,2400,UPI,sanjay.rao@gmail.com`;
+// Sample datasets (Set A / Set B) are defined in samples.js, loaded before this file.
 
 const EMAIL_RE = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
 
@@ -280,7 +264,8 @@ document.getElementById("file").addEventListener("change", (e) => {
   const f = e.target.files[0];
   if (f) Papa.parse(f, { header: true, skipEmptyLines: true, complete: (res) => loadData(res.data) });
 });
-document.getElementById("btn-sample").addEventListener("click", () => parseCsvText(SAMPLE_CSV));
+document.getElementById("btn-set-a").addEventListener("click", () => parseCsvText(SAMPLE_A));
+document.getElementById("btn-set-b").addEventListener("click", () => parseCsvText(SAMPLE_B));
 
 // ----------------------------------------------------------------------
 // Column mapping UI
