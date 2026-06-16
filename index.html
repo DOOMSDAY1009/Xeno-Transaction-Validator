@@ -12,33 +12,65 @@
       document.documentElement.setAttribute("data-theme", t);
     })();
   </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
   <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/alasql@4.5.1/dist/alasql.min.js"></script>
 </head>
 <body>
-  <header>
-    <div class="header-inner">
-      <div>
-        <h1>Transaction Data Validation</h1>
-        <p class="sub">
-          Upload a transaction dataset and the app checks phone numbers against per-country
-          rules, validates dates and amounts, and returns a cleaned file. Everything runs in
-          your browser, so the data never leaves your device.
-        </p>
+  <!-- Top navigation -->
+  <nav class="nav">
+    <div class="nav-inner">
+      <div class="brand">
+        <span class="brand-mark">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+        </span>
+        <span class="brand-text">Txn<strong>Validator</strong></span>
       </div>
-      <button id="theme-toggle" class="theme-btn" aria-label="Toggle light and dark theme" title="Toggle theme">
-        <svg class="icon-moon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-        <svg class="icon-sun" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
-      </button>
+      <div class="nav-actions">
+        <a class="icon-link" href="https://github.com/DOOMSDAY1009/Xeno-Transaction-Validator" target="_blank" rel="noopener" title="Source code">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M12 .5C5.7.5.5 5.7.5 12c0 5.1 3.3 9.4 7.9 10.9.6.1.8-.3.8-.6v-2c-3.2.7-3.9-1.4-3.9-1.4-.5-1.3-1.3-1.7-1.3-1.7-1.1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 .1.8 2.2 2.6 2 .1-.7.4-1.2.7-1.5-2.6-.3-5.3-1.3-5.3-5.7 0-1.3.4-2.3 1.2-3.1-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0C17 4.6 18 4.9 18 4.9c.6 1.6.2 2.8.1 3.1.8.8 1.2 1.8 1.2 3.1 0 4.4-2.7 5.4-5.3 5.7.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6 4.6-1.5 7.9-5.8 7.9-10.9C23.5 5.7 18.3.5 12 .5z"/></svg>
+        </a>
+        <button id="theme-toggle" class="theme-btn" aria-label="Toggle light and dark theme" title="Toggle theme">
+          <svg class="icon-moon" viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+          <svg class="icon-sun" viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+        </button>
+      </div>
     </div>
-  </header>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-inner">
+      <span class="eyebrow">Data readiness &middot; validation pipeline</span>
+      <h1>Transaction Data Validation</h1>
+      <p class="sub">
+        Clean and validate transaction datasets in seconds. Phone numbers are checked against
+        configurable per-country rules, dates and amounts are verified, and you get back a
+        cleaned file, an issues report, and auto-split chunks.
+      </p>
+      <div class="pills">
+        <span class="pill">Per-country phone rules</span>
+        <span class="pill">Date &amp; amount checks</span>
+        <span class="pill">Error vs warning grading</span>
+        <span class="pill">Auto CSV chunking</span>
+        <span class="pill">SQL playground</span>
+      </div>
+    </div>
+  </section>
 
   <main>
-    <!-- Sidebar: configurable rules -->
+    <!-- Settings sidebar -->
     <aside class="panel">
-      <h2>Settings</h2>
+      <div class="panel-head">
+        <span class="panel-icon">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="21" x2="4" y2="14"/><line x1="4" y1="10" x2="4" y2="3"/><line x1="12" y1="21" x2="12" y2="12"/><line x1="12" y1="8" x2="12" y2="3"/><line x1="20" y1="21" x2="20" y2="16"/><line x1="20" y1="12" x2="20" y2="3"/><line x1="1" y1="14" x2="7" y2="14"/><line x1="9" y1="8" x2="15" y2="8"/><line x1="17" y1="16" x2="23" y2="16"/></svg>
+        </span>
+        <h2>Settings</h2>
+      </div>
 
       <label>Phone rules by country
         <span class="hint">one per line: Country,dialingCode,digits</span>
@@ -71,8 +103,15 @@ Wallet</textarea>
 
     <!-- Main content -->
     <section class="content">
+      <!-- 1. Load -->
       <div class="card">
-        <h2>1. Load data</h2>
+        <div class="card-head">
+          <span class="card-icon">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+          </span>
+          <div class="card-head-text"><h2>Load data</h2><p class="card-sub">Upload a transaction CSV or use the built-in sample.</p></div>
+          <span class="step">Step 1</span>
+        </div>
         <div class="row">
           <input type="file" id="file" accept=".csv" />
           <button id="btn-sample" class="ghost">Use sample data</button>
@@ -86,18 +125,20 @@ Wallet</textarea>
         </div>
       </div>
 
+      <!-- SQL -->
       <div class="card hidden" id="sql-card">
-        <h2>SQL playground</h2>
-        <p class="muted">
-          Your data is loaded as a table named <code>data</code>. Write SQL and run it
-          (SELECT / WHERE / GROUP BY / JOIN). Runs in-browser via AlaSQL.
-        </p>
+        <div class="card-head">
+          <span class="card-icon">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
+          </span>
+          <div class="card-head-text"><h2>SQL playground</h2><p class="card-sub">Query your data as a table named <code>data</code>.</p></div>
+        </div>
         <select id="sql-example">
           <option value="SELECT * FROM data LIMIT 10">Example: preview rows</option>
           <option value="SELECT country, COUNT(*) AS rows FROM data GROUP BY country ORDER BY rows DESC">Example: count by country</option>
           <option value="SELECT * FROM data WHERE payment_mode = 'UPI'">Example: filter by payment mode</option>
         </select>
-        <textarea id="sql-query" rows="4">SELECT * FROM data LIMIT 10</textarea>
+        <textarea id="sql-query" rows="4" spellcheck="false">SELECT * FROM data LIMIT 10</textarea>
         <div class="row">
           <button id="btn-sql">Run in browser</button>
           <button id="btn-sql-cloud" class="ghost">Run on cloud MySQL</button>
@@ -106,22 +147,38 @@ Wallet</textarea>
         </div>
         <p class="muted">
           "Run in browser" uses AlaSQL (no setup). "Run on cloud MySQL" calls a real MySQL
-          database through a secure serverless function - full MySQL syntax, active once the
-          database is configured on the host. Push your data to the cloud DB first, then query it.
+          database through a secure serverless function with full MySQL syntax. Push your data
+          to the cloud DB first, then query it.
         </p>
         <p id="sql-status" class="status"></p>
         <div id="sql-result" class="table-scroll"></div>
       </div>
 
+      <!-- 2. Map -->
       <div class="card hidden" id="map-card">
-        <h2>2. Map your columns</h2>
-        <p class="muted">Auto-detected from the headers. Set any to "none" to skip that check.</p>
+        <div class="card-head">
+          <span class="card-icon">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3h18v18H3z"/><path d="M3 9h18M3 15h18M9 3v18M15 3v18"/></svg>
+          </span>
+          <div class="card-head-text"><h2>Map your columns</h2><p class="card-sub">Auto-detected from the headers. Set any to "none" to skip a check.</p></div>
+          <span class="step">Step 2</span>
+        </div>
         <div class="grid" id="map-grid"></div>
-        <button id="btn-validate" class="primary">Validate</button>
+        <button id="btn-validate" class="primary">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          Validate
+        </button>
       </div>
 
+      <!-- 3. Results -->
       <div class="card hidden" id="results-card">
-        <h2>3. Results</h2>
+        <div class="card-head">
+          <span class="card-icon">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M18 17V9M13 17V5M8 17v-3"/></svg>
+          </span>
+          <div class="card-head-text"><h2>Results</h2><p class="card-sub">Validation summary for your dataset.</p></div>
+          <span class="step">Step 3</span>
+        </div>
         <div class="metrics" id="metrics"></div>
         <div id="usable-bar" class="usable"></div>
         <h3 class="hidden" id="failed-h">What failed</h3>
@@ -130,8 +187,15 @@ Wallet</textarea>
         <div id="issues" class="table-scroll"></div>
       </div>
 
+      <!-- 4. Download -->
       <div class="card hidden" id="download-card">
-        <h2>4. Download</h2>
+        <div class="card-head">
+          <span class="card-icon">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          </span>
+          <div class="card-head-text"><h2>Download</h2><p class="card-sub">Export the cleaned and split outputs.</p></div>
+          <span class="step">Step 4</span>
+        </div>
         <div class="row">
           <button id="dl-clean">Cleaned data</button>
           <button id="dl-issues" class="ghost">Issues report</button>
@@ -143,7 +207,7 @@ Wallet</textarea>
   </main>
 
   <footer>
-    <span>Transaction Data Validation &middot; runs entirely in the browser</span>
+    <span>Transaction Data Validation</span>
   </footer>
 
   <script src="app.js"></script>

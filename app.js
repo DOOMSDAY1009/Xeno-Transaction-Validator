@@ -32,6 +32,13 @@ let COLUMNS = [];      // column names
 let LAST = null;       // last validation result
 let LAST_SQL = null;   // last SQL result rows
 
+const METRIC_ICONS = {
+  total: '<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>',
+  ok: '<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>',
+  warn: '<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>',
+  err: '<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>',
+};
+
 // ----------------------------------------------------------------------
 // Config readers (from the sidebar)
 // ----------------------------------------------------------------------
@@ -227,8 +234,15 @@ function renderTable(container, rows, cols, errorCol) {
     const tr = tbody.insertRow();
     columns.forEach((c) => {
       const td = tr.insertCell();
-      td.textContent = r[c] === null || r[c] === undefined ? "" : r[c];
-      if (c === errorCol) td.className = "err-cell";
+      if (c === "status") {
+        const span = document.createElement("span");
+        span.className = "tpill pill-" + (r[c] || "");
+        span.textContent = r[c] || "";
+        td.appendChild(span);
+      } else {
+        td.textContent = r[c] === null || r[c] === undefined ? "" : r[c];
+        if (c === errorCol) td.className = "err-cell";
+      }
     });
   });
   container.appendChild(table);
@@ -333,10 +347,10 @@ document.getElementById("btn-validate").addEventListener("click", () => {
   const s = res.summary;
   const metrics = document.getElementById("metrics");
   metrics.innerHTML = "";
-  [["Total rows", s.total, ""], ["Clean", s.clean, "ok"], ["Warnings", s.warning, "warn"], ["Errors", s.error, "err"]]
-    .forEach(([lbl, num, cls]) => {
+  [["Total rows", s.total, "", "total"], ["Clean", s.clean, "ok", "ok"], ["Warnings", s.warning, "warn", "warn"], ["Errors", s.error, "err", "err"]]
+    .forEach(([lbl, num, cls, ico]) => {
       const d = document.createElement("div"); d.className = "metric " + cls;
-      d.innerHTML = `<div class="num">${num}</div><div class="lbl">${lbl}</div>`;
+      d.innerHTML = `<span class="m-ico">${METRIC_ICONS[ico]}</span><div><div class="num">${num}</div><div class="lbl">${lbl}</div></div>`;
       metrics.appendChild(d);
     });
 
