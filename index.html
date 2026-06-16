@@ -128,15 +128,11 @@ Wallet</textarea>
         </select>
         <textarea id="sql-query" rows="4" spellcheck="false">SELECT * FROM data LIMIT 10</textarea>
         <div class="row">
-          <button id="btn-sql">Run in browser</button>
-          <button id="btn-sql-cloud" class="ghost">Run on cloud MySQL</button>
-          <button id="btn-cloud-load" class="ghost">Push data to cloud DB</button>
+          <button id="btn-sql">Run SQL</button>
           <button id="btn-sql-dl" class="ghost hidden">Download results</button>
         </div>
         <p class="muted">
-          "Run in browser" uses AlaSQL (no setup). "Run on cloud MySQL" calls a real MySQL
-          database through a secure serverless function with full MySQL syntax. Push your data
-          to the cloud DB first, then query it.
+          Runs in your browser via AlaSQL. Standard SQL works: SELECT, WHERE, GROUP BY, JOIN.
         </p>
         <p id="sql-status" class="status"></p>
         <div id="sql-result" class="table-scroll"></div>
