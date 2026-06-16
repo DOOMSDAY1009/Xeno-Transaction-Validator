@@ -74,6 +74,7 @@ body {
   min-height: 100vh;
   line-height: 1.55;
   -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
   transition: background-color .25s ease, color .25s ease;
 }
 
@@ -202,7 +203,7 @@ input:focus, textarea:focus, select:focus {
   box-shadow: 0 0 0 3px var(--blue-soft);
 }
 
-.content { display: flex; flex-direction: column; gap: 20px; }
+.content { display: flex; flex-direction: column; gap: 20px; min-width: 0; }
 
 /* ===== Cards ========================================================== */
 .card {
@@ -212,6 +213,7 @@ input:focus, textarea:focus, select:focus {
   padding: 22px 24px;
   box-shadow: var(--shadow);
   animation: rise .4s ease both;
+  min-width: 0;
 }
 @keyframes rise { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
 
